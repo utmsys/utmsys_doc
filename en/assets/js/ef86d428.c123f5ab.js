@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkutm_doc=self.webpackChunkutm_doc||[]).push([[9022],{715:s=>{s.exports=JSON.parse('{"tags":[{"label":"clippings","permalink":"/en/tags/clippings","count":2}]}')}}]);
