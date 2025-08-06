@@ -1,0 +1,264 @@
+<!doctype html>
+<html lang="en" dir="ltr" class="docs-wrapper plugin-docs plugin-id-default docs-version-current docs-doc-page docs-doc-id-Concepts/PX4" data-has-hydrated="false">
+<head>
+<meta charset="UTF-8">
+<meta name="generator" content="Docusaurus v3.8.1">
+<title data-rh="true">PX4 | UTMSYS</title><meta data-rh="true" name="viewport" content="width=device-width,initial-scale=1"><meta data-rh="true" name="twitter:card" content="summary_large_image"><meta data-rh="true" property="og:image" content="https://wiki.utmsys.org/en/img/docusaurus-social-card.jpg"><meta data-rh="true" name="twitter:image" content="https://wiki.utmsys.org/en/img/docusaurus-social-card.jpg"><meta data-rh="true" property="og:url" content="https://wiki.utmsys.org/en/Concepts/PX4"><meta data-rh="true" property="og:locale" content="en"><meta data-rh="true" property="og:locale:alternate" content="zh"><meta data-rh="true" name="docusaurus_locale" content="en"><meta data-rh="true" name="docsearch:language" content="en"><meta data-rh="true" name="docusaurus_version" content="current"><meta data-rh="true" name="docusaurus_tag" content="docs-default-current"><meta data-rh="true" name="docsearch:version" content="current"><meta data-rh="true" name="docsearch:docusaurus_tag" content="docs-default-current"><meta data-rh="true" property="og:title" content="PX4 | UTMSYS"><meta data-rh="true" name="description" content="PX4飞控架构详解"><meta data-rh="true" property="og:description" content="PX4飞控架构详解"><link data-rh="true" rel="icon" href="/en/img/logo.png"><link data-rh="true" rel="canonical" href="https://wiki.utmsys.org/en/Concepts/PX4"><link data-rh="true" rel="alternate" href="https://wiki.utmsys.org/en/Concepts/PX4" hreflang="en"><link data-rh="true" rel="alternate" href="https://wiki.utmsys.org/Concepts/PX4" hreflang="zh"><link data-rh="true" rel="alternate" href="https://wiki.utmsys.org/Concepts/PX4" hreflang="x-default"><script data-rh="true" type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"11. 相关概念","item":"https://wiki.utmsys.org/en/11_Concepts"},{"@type":"ListItem","position":2,"name":"PX4","item":"https://wiki.utmsys.org/en/Concepts/PX4"}]}</script><link rel="stylesheet" href="/en/assets/css/styles.fdfcd1c3.css">
+<script src="/en/assets/js/runtime~main.cbf500da.js" defer="defer"></script>
+<script src="/en/assets/js/main.51f2dd3d.js" defer="defer"></script>
+</head>
+<body class="navigation-with-keyboard">
+<svg xmlns="http://www.w3.org/2000/svg" style="display: none;"><defs>
+<symbol id="theme-svg-external-link" viewBox="0 0 24 24"><path fill="currentColor" d="M21 13v10h-21v-19h12v2h-10v15h17v-8h2zm3-12h-10.988l4.035 4-6.977 7.07 2.828 2.828 6.977-7.07 4.125 4.172v-11z"/></symbol>
+</defs></svg>
+<script>!function(){var t="light";var e=function(){try{return new URLSearchParams(window.location.search).get("docusaurus-theme")}catch(t){}}()||function(){try{return window.localStorage.getItem("theme")}catch(t){}}();document.documentElement.setAttribute("data-theme",e||t),document.documentElement.setAttribute("data-theme-choice",e||t)}(),function(){try{const c=new URLSearchParams(window.location.search).entries();for(var[t,e]of c)if(t.startsWith("docusaurus-data-")){var a=t.replace("docusaurus-data-","data-");document.documentElement.setAttribute(a,e)}}catch(t){}}()</script><div id="__docusaurus"><div role="region" aria-label="Skip to main content"><a class="skipToContent_fXgn" href="#__docusaurus_skipToContent_fallback">Skip to main content</a></div><nav aria-label="Main" class="theme-layout-navbar navbar navbar--fixed-top"><div class="navbar__inner"><div class="theme-layout-navbar-left navbar__items"><button aria-label="Toggle navigation bar" aria-expanded="false" class="navbar__toggle clean-btn" type="button"><svg width="30" height="30" viewBox="0 0 30 30" aria-hidden="true"><path stroke="currentColor" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2" d="M4 7h22M4 15h22M4 23h22"></path></svg></button><a class="navbar__brand" href="/en/"><div class="navbar__logo"><img src="/en/img/logo.png" alt="My Site Logo" class="themedComponent_mlkZ themedComponent--light_NVdE"><img src="/en/img/logo.png" alt="My Site Logo" class="themedComponent_mlkZ themedComponent--dark_xIcU"></div><b class="navbar__title text--truncate">UTMSYS</b></a><a aria-current="page" class="navbar__item navbar__link navbar__link--active" href="/en/UTMSYS介绍">Start</a><a href="https://www.utmsys.org/" target="_blank" rel="noopener noreferrer" class="navbar__item navbar__link">Community<svg width="13.5" height="13.5" aria-hidden="true" class="iconExternalLink_nPIU"><use href="#theme-svg-external-link"></use></svg></a></div><div class="theme-layout-navbar-right navbar__items navbar__items--right"><a href="https://github.com/utmsys/" target="_blank" rel="noopener noreferrer" class="navbar__item navbar__link">GitHub<svg width="13.5" height="13.5" aria-hidden="true" class="iconExternalLink_nPIU"><use href="#theme-svg-external-link"></use></svg></a><div class="navbar__item dropdown dropdown--hoverable dropdown--right"><a href="#" aria-haspopup="true" aria-expanded="false" role="button" class="navbar__link"><svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" class="iconLanguage_nlXk"><path fill="currentColor" d="M12.87 15.07l-2.54-2.51.03-.03c1.74-1.94 2.98-4.17 3.71-6.53H17V4h-7V2H8v2H1v1.99h11.17C11.5 7.92 10.44 9.75 9 11.35 8.07 10.32 7.3 9.19 6.69 8h-2c.73 1.63 1.73 3.17 2.98 4.56l-5.09 5.02L4 19l5-5 3.11 3.11.76-2.04zM18.5 10h-2L12 22h2l1.12-3h4.75L21 22h2l-4.5-12zm-2.62 7l1.62-4.33L19.12 17h-3.24z"></path></svg>English</a><ul class="dropdown__menu"><li><a href="/en/Concepts/PX4" target="_self" rel="noopener noreferrer" class="dropdown__link dropdown__link--active" lang="en">English</a></li><li><a href="/Concepts/PX4" target="_self" rel="noopener noreferrer" class="dropdown__link" lang="zh">简体中文</a></li></ul></div><div class="toggle_vylO colorModeToggle_DEke"><button class="clean-btn toggleButton_gllP toggleButtonDisabled_aARS" type="button" disabled="" title="system mode" aria-label="Switch between dark and light mode (currently system mode)"><svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true" class="toggleIcon_g3eP lightToggleIcon_pyhR"><path fill="currentColor" d="M12,9c1.65,0,3,1.35,3,3s-1.35,3-3,3s-3-1.35-3-3S10.35,9,12,9 M12,7c-2.76,0-5,2.24-5,5s2.24,5,5,5s5-2.24,5-5 S14.76,7,12,7L12,7z M2,13l2,0c0.55,0,1-0.45,1-1s-0.45-1-1-1l-2,0c-0.55,0-1,0.45-1,1S1.45,13,2,13z M20,13l2,0c0.55,0,1-0.45,1-1 s-0.45-1-1-1l-2,0c-0.55,0-1,0.45-1,1S19.45,13,20,13z M11,2v2c0,0.55,0.45,1,1,1s1-0.45,1-1V2c0-0.55-0.45-1-1-1S11,1.45,11,2z M11,20v2c0,0.55,0.45,1,1,1s1-0.45,1-1v-2c0-0.55-0.45-1-1-1C11.45,19,11,19.45,11,20z M5.99,4.58c-0.39-0.39-1.03-0.39-1.41,0 c-0.39,0.39-0.39,1.03,0,1.41l1.06,1.06c0.39,0.39,1.03,0.39,1.41,0s0.39-1.03,0-1.41L5.99,4.58z M18.36,16.95 c-0.39-0.39-1.03-0.39-1.41,0c-0.39,0.39-0.39,1.03,0,1.41l1.06,1.06c0.39,0.39,1.03,0.39,1.41,0c0.39-0.39,0.39-1.03,0-1.41 L18.36,16.95z M19.42,5.99c0.39-0.39,0.39-1.03,0-1.41c-0.39-0.39-1.03-0.39-1.41,0l-1.06,1.06c-0.39,0.39-0.39,1.03,0,1.41 s1.03,0.39,1.41,0L19.42,5.99z M7.05,18.36c0.39-0.39,0.39-1.03,0-1.41c-0.39-0.39-1.03-0.39-1.41,0l-1.06,1.06 c-0.39,0.39-0.39,1.03,0,1.41s1.03,0.39,1.41,0L7.05,18.36z"></path></svg><svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true" class="toggleIcon_g3eP darkToggleIcon_wfgR"><path fill="currentColor" d="M9.37,5.51C9.19,6.15,9.1,6.82,9.1,7.5c0,4.08,3.32,7.4,7.4,7.4c0.68,0,1.35-0.09,1.99-0.27C17.45,17.19,14.93,19,12,19 c-3.86,0-7-3.14-7-7C5,9.07,6.81,6.55,9.37,5.51z M12,3c-4.97,0-9,4.03-9,9s4.03,9,9,9s9-4.03,9-9c0-0.46-0.04-0.92-0.1-1.36 c-0.98,1.37-2.58,2.26-4.4,2.26c-2.98,0-5.4-2.42-5.4-5.4c0-1.81,0.89-3.42,2.26-4.4C12.92,3.04,12.46,3,12,3L12,3z"></path></svg><svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true" class="toggleIcon_g3eP systemToggleIcon_QzmC"><path fill="currentColor" d="m12 21c4.971 0 9-4.029 9-9s-4.029-9-9-9-9 4.029-9 9 4.029 9 9 9zm4.95-13.95c1.313 1.313 2.05 3.093 2.05 4.95s-0.738 3.637-2.05 4.95c-1.313 1.313-3.093 2.05-4.95 2.05v-14c1.857 0 3.637 0.737 4.95 2.05z"></path></svg></button></div><div class="navbarSearchContainer_Bca1"><div class="navbar__search searchBarContainer_NW3z" dir="ltr"><input placeholder="Search" aria-label="Search" class="navbar__search-input" value=""><div class="loadingRing_RJI3 searchBarLoadingRing_YnHq"><div></div><div></div><div></div><div></div></div></div></div></div></div><div role="presentation" class="navbar-sidebar__backdrop"></div></nav><div id="__docusaurus_skipToContent_fallback" class="theme-layout-main main-wrapper mainWrapper_z2l0"><div class="docsWrapper_hBAB"><button aria-label="Scroll back to top" class="clean-btn theme-back-to-top-button backToTopButton_sjWU" type="button"></button><div class="docRoot_UBD9"><aside class="theme-doc-sidebar-container docSidebarContainer_YfHR"><div class="sidebarViewport_aRkj"><div class="sidebar_njMd"><nav aria-label="Docs sidebar" class="menu thin-scrollbar menu_SIkG"><ul class="theme-doc-sidebar-menu menu__list"><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-1 menu__list-item"><a class="menu__link" href="/en/UTMSYS介绍">UTMSYS ORG</a></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist" href="/en/01_Product_Overview">1. 产品概述</a><button aria-label="Expand sidebar category &#x27;1. 产品概述&#x27;" aria-expanded="false" type="button" class="clean-btn menu__caret"></button></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist" href="/en/02_Hardware_Connection">2. 硬件连接</a><button aria-label="Expand sidebar category &#x27;2. 硬件连接&#x27;" aria-expanded="false" type="button" class="clean-btn menu__caret"></button></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist" href="/en/03_Image_Flash">3. 镜像烧录</a><button aria-label="Expand sidebar category &#x27;3. 镜像烧录&#x27;" aria-expanded="false" type="button" class="clean-btn menu__caret"></button></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist" href="/en/04_Terminal_Access">4. 终端访问</a><button aria-label="Expand sidebar category &#x27;4. 终端访问&#x27;" aria-expanded="false" type="button" class="clean-btn menu__caret"></button></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist" href="/en/05_System_Config">5. 系统配置</a><button aria-label="Expand sidebar category &#x27;5. 系统配置&#x27;" aria-expanded="false" type="button" class="clean-btn menu__caret"></button></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist" href="/en/06_Software_Install">6. 软件安装</a><button aria-label="Expand sidebar category &#x27;6. 软件安装&#x27;" aria-expanded="false" type="button" class="clean-btn menu__caret"></button></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist" href="/en/07_Data_Communication">7. 数据通信</a><button aria-label="Expand sidebar category &#x27;7. 数据通信&#x27;" aria-expanded="false" type="button" class="clean-btn menu__caret"></button></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist" href="/en/08_Application_Development">8. 应用开发</a><button aria-label="Expand sidebar category &#x27;8. 应用开发&#x27;" aria-expanded="false" type="button" class="clean-btn menu__caret"></button></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist" href="/en/09_Algorithm_Development">9. 算法开发</a><button aria-label="Expand sidebar category &#x27;9. 算法开发&#x27;" aria-expanded="false" type="button" class="clean-btn menu__caret"></button></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist" href="/en/10_Debug_Commands">10. 调试命令</a><button aria-label="Expand sidebar category &#x27;10. 调试命令&#x27;" aria-expanded="false" type="button" class="clean-btn menu__caret"></button></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist menu__link--active" href="/en/11_Concepts">11. 相关概念</a><button aria-label="Collapse sidebar category &#x27;11. 相关概念&#x27;" aria-expanded="true" type="button" class="clean-btn menu__caret"></button></div><ul class="menu__list"><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/en/Concepts/Gazebo">Gazebo</a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/en/Concepts/Micro XRCE-DDS">Micro XRCE-DDS</a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link menu__link--active" aria-current="page" tabindex="0" href="/en/Concepts/PX4">PX4</a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/en/Concepts/ROS2">ROS2</a></li></ul></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist" href="/en/12_FAQ">12. 常见问题</a><button aria-label="Expand sidebar category &#x27;12. 常见问题&#x27;" aria-expanded="false" type="button" class="clean-btn menu__caret"></button></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist" href="/en/13_Release">13. 发布日志</a><button aria-label="Expand sidebar category &#x27;13. 发布日志&#x27;" aria-expanded="false" type="button" class="clean-btn menu__caret"></button></div></li></ul></nav></div></div></aside><main class="docMainContainer_TBSr"><div class="container padding-top--md padding-bottom--lg"><div class="row"><div class="col docItemCol_VOVn"><div class="docItemContainer_Djhp"><article><nav class="theme-doc-breadcrumbs breadcrumbsContainer_Z_bl" aria-label="Breadcrumbs"><ul class="breadcrumbs"><li class="breadcrumbs__item"><a aria-label="Home page" class="breadcrumbs__link" href="/en/"><svg viewBox="0 0 24 24" class="breadcrumbHomeIcon_YNFT"><path d="M10 19v-5h4v5c0 .55.45 1 1 1h3c.55 0 1-.45 1-1v-7h1.7c.46 0 .68-.57.33-.87L12.67 3.6c-.38-.34-.96-.34-1.34 0l-8.36 7.53c-.34.3-.13.87.33.87H5v7c0 .55.45 1 1 1h3c.55 0 1-.45 1-1z" fill="currentColor"></path></svg></a></li><li class="breadcrumbs__item"><a class="breadcrumbs__link" href="/en/11_Concepts"><span>11. 相关概念</span></a></li><li class="breadcrumbs__item breadcrumbs__item--active"><span class="breadcrumbs__link">PX4</span></li></ul></nav><div class="tocCollapsible_ETCw theme-doc-toc-mobile tocMobile_ITEo"><button type="button" class="clean-btn tocCollapsibleButton_TO0P">On this page</button></div><div class="theme-doc-markdown markdown"><header><h1>PX4</h1></header>
+<h2 class="anchor anchorWithStickyNavbar_LWe7" id="px4飞控架构详解">PX4飞控架构详解<a href="#px4飞控架构详解" class="hash-link" aria-label="Direct link to PX4飞控架构详解" title="Direct link to PX4飞控架构详解">​</a></h2>
+<p>PX4（Pixhawk Autopilot）是一款开源的无人机飞控系统，广泛应用于多旋翼、固定翼、垂直起降（VTOL）等无人机平台。其架构设计遵循模块化、实时性和可扩展性原则，支持从消费级到工业级的多种应用场景。以下从架构分层、核心组件、数据流程等方面详细解析：</p>
+<h3 class="anchor anchorWithStickyNavbar_LWe7" id="一整体架构概述"><strong>一、整体架构概述</strong><a href="#一整体架构概述" class="hash-link" aria-label="Direct link to 一整体架构概述" title="Direct link to 一整体架构概述">​</a></h3>
+<p>PX4 采用<strong>分层架构设计</strong>，将系统功能划分为不同层次，各层通过标准化接口交互，确保模块解耦和可复用性。核心架构分为：</p>
+<ol>
+<li><strong>硬件抽象层（HAL）</strong></li>
+<li><strong>中间件层（Middleware）</strong></li>
+<li><strong>应用层（Applications）</strong></li>
+<li><strong>外围工具与接口</strong></li>
+</ol>
+<h3 class="anchor anchorWithStickyNavbar_LWe7" id="二核心架构组件解析"><strong>二、核心架构组件解析</strong><a href="#二核心架构组件解析" class="hash-link" aria-label="Direct link to 二核心架构组件解析" title="Direct link to 二核心架构组件解析">​</a></h3>
+<h4 class="anchor anchorWithStickyNavbar_LWe7" id="1-硬件抽象层hardware-abstraction-layer-hal"><strong>1. 硬件抽象层（Hardware Abstraction Layer, HAL）</strong><a href="#1-硬件抽象层hardware-abstraction-layer-hal" class="hash-link" aria-label="Direct link to 1-硬件抽象层hardware-abstraction-layer-hal" title="Direct link to 1-硬件抽象层hardware-abstraction-layer-hal">​</a></h4>
+<ul>
+<li><strong>功能</strong>：屏蔽底层硬件差异，为上层提供统一接口，支持不同硬件平台（如 Pixhawk 系列、Holybro Kakute 等）。</li>
+<li><strong>关键模块</strong>：<!-- -->
+<ul>
+<li><strong>传感器驱动</strong>：支持陀螺仪、加速度计、磁力计、气压计等惯性测量单元（IMU），以及 GPS、视觉传感器等。</li>
+<li><strong>执行器驱动</strong>：控制电机、舵机、电调（ESC）等输出设备，支持 PWM、DShot 等通信协议。</li>
+<li><strong>通信接口</strong>：UART、I2C、SPI、CAN 等硬件通信协议的抽象接口。</li>
+<li><strong>电源管理</strong>：电池电压监测、电源状态管理。</li>
+</ul>
+</li>
+</ul>
+<h4 class="anchor anchorWithStickyNavbar_LWe7" id="2-中间件层middleware"><strong>2. 中间件层（Middleware）</strong><a href="#2-中间件层middleware" class="hash-link" aria-label="Direct link to 2-中间件层middleware" title="Direct link to 2-中间件层middleware">​</a></h4>
+<p>中间件层是 PX4 架构的核心，负责实时任务调度、数据处理和模块间通信，包含以下关键组件：</p>
+<h5 class="anchor anchorWithStickyNavbar_LWe7" id="1实时操作系统rtos"><strong>（1）实时操作系统（RTOS）</strong><a href="#1实时操作系统rtos" class="hash-link" aria-label="Direct link to 1实时操作系统rtos" title="Direct link to 1实时操作系统rtos">​</a></h5>
+<ul>
+<li>基于<strong>NuttX RTOS</strong>（或 Zephyr RTOS），提供任务调度、内存管理、中断处理等实时性支持。</li>
+<li>支持多线程并行处理（如传感器读取、控制算法、通信任务分离），确保高优先级任务（如姿态控制）的实时响应。</li>
+</ul>
+<h5 class="anchor anchorWithStickyNavbar_LWe7" id="2数据分发与通信uorb"><strong>（2）数据分发与通信（uORB）</strong><a href="#2数据分发与通信uorb" class="hash-link" aria-label="Direct link to 2数据分发与通信uorb" title="Direct link to 2数据分发与通信uorb">​</a></h5>
+<ul>
+<li><strong>uORB（微对象请求代理）</strong>：PX4 自研的轻量级消息总线，用于模块间数据共享。</li>
+<li><strong>特点</strong>：<!-- -->
+<ul>
+<li>发布 / 订阅模式：模块可发布数据（如传感器读数）或订阅数据（如控制指令），解耦模块间依赖。</li>
+<li>实时性保障：消息队列优先级管理，确保关键数据（如姿态信息）优先传输。</li>
+<li>典型消息示例：<code>sensor_combined</code>（传感器融合数据）、<code>vehicle_attitude</code>（飞行器姿态）、<code>actuator_controls</code>（执行器控制指令）。</li>
+</ul>
+</li>
+</ul>
+<h5 class="anchor anchorWithStickyNavbar_LWe7" id="3控制算法核心"><strong>（3）控制算法核心</strong><a href="#3控制算法核心" class="hash-link" aria-label="Direct link to 3控制算法核心" title="Direct link to 3控制算法核心">​</a></h5>
+<ul>
+<li><strong>姿态控制模块（Attitude Control）</strong>：<!-- -->
+<ul>
+<li>基于 PID、互补滤波等算法，处理 IMU 数据，计算飞行器姿态（滚转、俯仰、偏航），并输出电机 / 舵机控制量。</li>
+</ul>
+</li>
+<li><strong>位置与导航控制（Position &amp; Navigation）</strong>：<!-- -->
+<ul>
+<li>融合 GPS、视觉定位（如光流）、气压计数据，实现定点悬停、轨迹跟踪等功能。</li>
+</ul>
+</li>
+<li><strong>路径规划与任务管理（Mission &amp; Path Planning）</strong>：<!-- -->
+<ul>
+<li>支持通过 MAVLink 协议接收任务指令（如航点飞行），或本地执行预设任务脚本（.mission 文件）。</li>
+</ul>
+</li>
+</ul>
+<h5 class="anchor anchorWithStickyNavbar_LWe7" id="4硬件接口与驱动中间件"><strong>（4）硬件接口与驱动中间件</strong><a href="#4硬件接口与驱动中间件" class="hash-link" aria-label="Direct link to 4硬件接口与驱动中间件" title="Direct link to 4硬件接口与驱动中间件">​</a></h5>
+<ul>
+<li>封装底层硬件驱动，向上层提供标准化接口（如<code>device drivers</code>模块管理传感器设备）。</li>
+</ul>
+<h4 class="anchor anchorWithStickyNavbar_LWe7" id="3-应用层applications"><strong>3. 应用层（Applications）</strong><a href="#3-应用层applications" class="hash-link" aria-label="Direct link to 3-应用层applications" title="Direct link to 3-应用层applications">​</a></h4>
+<p>应用层包含用户可直接调用的功能模块和命令行工具，实现具体飞行模式和任务：</p>
+<ul>
+<li><strong>飞行模式</strong>：<!-- -->
+<ul>
+<li>手动模式（Manual）、稳定模式（Stabilized）、定点模式（Position）、自动模式（Auto，航点飞行）、返航模式（Return to Launch, RTL）等。</li>
+</ul>
+</li>
+<li><strong>实用工具</strong>：<!-- -->
+<ul>
+<li><code>commander</code>：接收并执行飞行指令（如起飞、降落）。</li>
+<li><code>mavlink</code>：处理 MAVLink 通信协议，与地面站（如 QGroundControl）交  互。</li>
+<li><code>px4ctl</code>：系统配置与控制命令（如参数调整、日志管理）。</li>
+</ul>
+</li>
+<li><strong>扩展应用</strong>：<!-- -->
+<ul>
+<li>支持自定义应用开发（如视觉避障、农业喷洒控制），通过 CMake 编译集成到系统中。</li>
+</ul>
+</li>
+</ul>
+<h4 class="anchor anchorWithStickyNavbar_LWe7" id="4-外围工具与接口"><strong>4. 外围工具与接口</strong><a href="#4-外围工具与接口" class="hash-link" aria-label="Direct link to 4-外围工具与接口" title="Direct link to 4-外围工具与接口">​</a></h4>
+<ul>
+<li><strong>地面站接口</strong>：通过 MAVLink 协议与 QGroundControl、Mission Planner 等地面站软件通信，实现参数配置、实时监控和任务规划。</li>
+<li><strong>开发工具链</strong>：<!-- -->
+<ul>
+<li>基于 GCC 的交叉编译工具，支持在 Linux、Windows、macOS 上开发。</li>
+<li>仿真环境：通过 Gazebo、JSBSim 等工具实现软件在环（SIL）和硬件在环（HIL）仿真测试。</li>
+</ul>
+</li>
+<li><strong>通信协议</strong>：支持 MAVLink、ROS/ROS 2、UDP/TCP 等协议，便于与其他系统集成（如机器人操作系统、云平台）。</li>
+</ul>
+<h3 class="anchor anchorWithStickyNavbar_LWe7" id="三数据流程与控制环路"><strong>三、数据流程与控制环路</strong><a href="#三数据流程与控制环路" class="hash-link" aria-label="Direct link to 三数据流程与控制环路" title="Direct link to 三数据流程与控制环路">​</a></h3>
+<h4 class="anchor anchorWithStickyNavbar_LWe7" id="1-传感器数据处理流程"><strong>1. 传感器数据处理流程</strong><a href="#1-传感器数据处理流程" class="hash-link" aria-label="Direct link to 1-传感器数据处理流程" title="Direct link to 1-传感器数据处理流程">​</a></h4>
+<ol>
+<li><strong>数据采集</strong>：HAL 层驱动读取传感器原始数据（如 IMU 的角速度、加速度）。</li>
+<li><strong>预处理</strong>：通过滤波算法（如互 补滤波、卡尔曼滤波）去除噪声，校准传感器偏差。</li>
+<li><strong>数据发布</strong>：通过 uORB 发布到消息总线，供姿态控制模块订阅。</li>
+</ol>
+<h4 class="anchor anchorWithStickyNavbar_LWe7" id="2-控制环路以姿态控制为例"><strong>2. 控制环路（以姿态控制为例）</strong><a href="#2-控制环路以姿态控制为例" class="hash-link" aria-label="Direct link to 2-控制环路以姿态控制为例" title="Direct link to 2-控制环路以姿态控制为例">​</a></h4>
+<ol>
+<li><strong>外环（位置 / 速度控制）</strong>：根据目标位置（如 GPS 航点）计算期望姿态（角度）。</li>
+<li><strong>内环（姿态控制）</strong>：对比当前姿态与期望姿态，通过 PID 算法生成电机控制量。</li>
+<li><strong>输出执行</strong>：控制量通过 HAL 层驱动发送至电调 / 舵机，调整飞行器姿态。</li>
+</ol>
+<h4 class="anchor anchorWithStickyNavbar_LWe7" id="3-任务与通信流程"><strong>3. 任务与通信流程</strong><a href="#3-任务与通信流程" class="hash-link" aria-label="Direct link to 3-任务与通信流程" title="Direct link to 3-任务与通信流程">​</a></h4>
+<ul>
+<li>地面站通过 MAVLink 发送任务指令（如 “前往坐标 (10,20,30)”），经<code>mavlink</code>模块解析后，由<code>commander</code>模块转换为飞行控制指令，通过控制环路执行。</li>
+</ul>
+<h3 class="anchor anchorWithStickyNavbar_LWe7" id="四架构优势与设计原则"><strong>四、架构优势与设计原则</strong><a href="#四架构优势与设计原则" class="hash-link" aria-label="Direct link to 四架构优势与设计原则" title="Direct link to 四架构优势与设计原则">​</a></h3>
+<ol>
+<li><strong>模块化设计</strong>：各功能模块独立开发、测试，便于维护和扩展（如添加新传感器或飞行模式）。</li>
+<li><strong>实时性保障</strong>：基于 RTOS 和 uORB 消息优先级机制，确保控制环路（通常 100-1000Hz ）的实时响应。</li>
+<li><strong>跨平台兼容性</strong>：通过 HAL 层抽象，支持多种硬件平台（如 Pixhawk 2、FMUv5）和 RTOS（NuttX/Zephyr）。</li>
+<li><strong>开源生态</strong>：依托 PX4 开源社区，支持全球开发者贡献代码，集成先进算法（如视觉 SLAM、自主避障）。</li>
+</ol>
+<h3 class="anchor anchorWithStickyNavbar_LWe7" id="五典型应用场景"><strong>五、典型应用场景</strong><a href="#五典型应用场景" class="hash-link" aria-label="Direct link to 五典型应用场景" title="Direct link to 五典型应用场景">​</a></h3>
+<ul>
+<li><strong>消费级无人机</strong>：如大疆开源平台、穿越机控制。</li>
+<li><strong>工业级应用</strong>：农业植保、物流配送、电力巡检、测绘航拍。</li>
+<li><strong>科研与教育</strong>：高校无人机研究、自动驾驶算法验证（如 MIT 的 AeroAstro 实验室项目）。</li>
+<li><strong>特殊场景</strong>：军事侦察、灾后救援、地质勘探等对可靠性要求高的领域。</li>
+</ul>
+<h3 class="anchor anchorWithStickyNavbar_LWe7" id="六开发与扩展方式"><strong>六、开发与扩展方式</strong><a href="#六开发与扩展方式" class="hash-link" aria-label="Direct link to 六开发与扩展方式" title="Direct link to 六开发与扩展方式">​</a></h3>
+<ul>
+<li><strong>源码结构</strong>：PX4 源码基于 CMake 组织，目录结构清晰（如<code>src/lib</code>为库文件，<code>src/modules</code>为功能模块）。</li>
+<li><strong>自定义开发</strong>：通过创建新模块（如<code>src/modules/my_application</code>）实现特定功能，利用 uORB 接口与其他模块交互。</li>
+<li><strong>仿真测试</strong>：使用 Gazebo 模拟飞行器和环境，无需硬件即可验证算法（如<code>make px4_sitl gazebo</code>启动仿真）。</li>
+</ul>
+<h3 class="anchor anchorWithStickyNavbar_LWe7" id="总结"><strong>总结</strong><a href="#总结" class="hash-link" aria-label="Direct link to 总结" title="Direct link to 总结">​</a></h3>
+<p>PX4 飞控架构通过分层设计、模块化组件和实时通信机制，实现了无人机控制的高效性与灵活性。从底层硬件驱动到上层应用功能，各层通过标准化接口协同工作，既满足了工业级无人机的可靠性需求，又为开发者提供了开放的扩展空间。无论是消费级无人机的快速开发，还是复杂场景下的自主控制，PX4 架构都展现了强大的适应性和可扩展性。</p>
+<h1>Pixhawk、FMU、PX4 、FC概念的区别</h1>
+<p>在无人机飞控领域，Pixhawk、FMU、PX4、FC 是几个紧密相关但含义不同的概念，它们分别对应硬件、核心模块、软件系统和功能类别。以下是具体区别和联系的详细说明：</p>
+<h3 class="anchor anchorWithStickyNavbar_LWe7" id="1fcflight-controller飞控">1. <strong>FC（Flight Controller，飞控）</strong><a href="#1fcflight-controller飞控" class="hash-link" aria-label="Direct link to 1fcflight-controller飞控" title="Direct link to 1fcflight-controller飞控">​</a></h3>
+<ul>
+<li><strong>定义</strong>：FC 是 “飞控” 的统称，指负责无人机姿态控制、导航、任务执行等核心功能的<strong>硬件设备</strong>，是无人机的 “大脑”。</li>
+<li><strong>作用</strong>：通过传感器（陀螺仪、加速度计、GPS 等）获取无人机状态，计算控制指令，驱动电机或舵机调整飞行姿态，同时处理地面站指令、执行自主任务等。</li>
+<li><strong>范围</strong>：所有无人机的飞行控制硬件都可称为 FC，例如 Pixhawk、APM（ArduPilot Mega）、大疆的 N3/M6 等，都属于 FC 的具体产品。</li>
+</ul>
+<h3 class="anchor anchorWithStickyNavbar_LWe7" id="2pixhawk">2. <strong>Pixhawk</strong><a href="#2pixhawk" class="hash-link" aria-label="Direct link to 2pixhawk" title="Direct link to 2pixhawk">​</a></h3>
+<ul>
+<li><strong>定义</strong>：Pixhawk 是<strong>具体的飞控硬件系列</strong>，由开源无人机社区（如 PX4 项目）推动开发，最初基于 3DRobotics 公司的设计，现已成为开源飞控的标杆。</li>
+<li><strong>特点</strong>：<!-- -->
+<ul>
+<li>开源硬件：设计图纸和规格公开，支持二次开发。</li>
+<li>兼容性强：适配多种无人机类型（多旋翼、固定翼、直升机等）。</li>
+<li>迭代版本多：如 Pixhawk 1（FMUv2）、Pixhawk 2.1（FMUv3）、Pixhawk 4（FMUv5）等，性能随版本提升（算力、传感器精度等）。</li>
+</ul>
+</li>
+<li><strong>与 FC 的关系</strong>：Pixhawk 是 FC 的一种具体实现，是最知名的开源 FC 产品之一。</li>
+</ul>
+<h3 class="anchor anchorWithStickyNavbar_LWe7" id="3fmuflight-management-unit飞行管理单元">3. <strong>FMU（Flight Management Unit，飞行管理单元）</strong><a href="#3fmuflight-management-unit飞行管理单元" class="hash-link" aria-label="Direct link to 3fmuflight-management-unit飞行管理单元" title="Direct link to 3fmuflight-management-unit飞行管理单元">​</a></h3>
+<ul>
+<li><strong>定义</strong>：FMU 是 Pixhawk 硬件中的<strong>核心计算模块</strong>，相当于飞控的 “主芯片”，负责运行飞行控制算法、处理传感器数据和执行控制逻辑。</li>
+<li><strong>组成</strong>：通常包含微处理器（如 STM32 系列）、内存、电源管理电路等，是 Pixhawk 硬件的核心组件。</li>
+<li><strong>版本对应</strong>：不同 Pixhawk 型号对应不同版本的 FMU，例如：<!-- -->
+<ul>
+<li>Pixhawk 1 搭载 FMUv2</li>
+<li>Pixhawk 4 搭载 FMUv5</li>
+<li>版本升级通常意味着更强的算力、更多接口和更好的稳定性。</li>
+</ul>
+</li>
+<li><strong>与 Pixhawk 的关系</strong>：FMU 是 Pixhawk 硬件的一部分，是其实现飞行控制功能的核心单元。</li>
+</ul>
+<h3 class="anchor anchorWithStickyNavbar_LWe7" id="4px4">4. <strong>PX4</strong><a href="#4px4" class="hash-link" aria-label="Direct link to 4px4" title="Direct link to 4px4">​</a></h3>
+<ul>
+<li><strong>定义</strong>：PX4 是<strong>开源飞行控制软件系统</strong>，运行在飞控硬件（如 Pixhawk）上，负责实现无人机的自主飞行逻辑（姿态控制、路径规划、任务调度等）。</li>
+<li><strong>功能</strong>：<!-- -->
+<ul>
+<li>提供底层控制算法（如 PID 控制、LQR 控制）。</li>
+<li>支持多种传感器和外设（GPS、气压计、避障雷达等）。</li>
+<li>兼容地面站软件（如 QGroundControl），支持手动 / 自动飞行模式切换。</li>
+</ul>
+</li>
+<li><strong>与硬件的关系</strong>：PX4 是软件，需运行在特定硬件上，<strong>最典型的适配硬件就是 Pixhawk</strong>，但也可移植到其他 FC（如大疆 N3 部分支持 PX4）。</li>
+<li><strong>与 ArduPilot 的区别</strong>：PX4 和 ArduPilot 是两大主流开源飞控软件，PX4 更侧重模块化设计和实时性，ArduPilot 则以功能丰富、易用性强著称，两者均可在 Pixhawk 上运行。</li>
+</ul>
+<h3 class="anchor anchorWithStickyNavbar_LWe7" id="总结四者的关系">总结：四者的关系<a href="#总结四者的关系" class="hash-link" aria-label="Direct link to 总结：四者的关系" title="Direct link to 总结：四者的关系">​</a></h3>
+<table><thead><tr><th>概念</th><th>类型</th><th>核心作用</th><th>举例 / 对应关系</th></tr></thead><tbody><tr><td>FC</td><td>功能类别</td><td>无人机的 “大脑”（硬件统称）</td><td>Pixhawk、大疆 N3 等都是 FC</td></tr><tr><td>Pixhawk</td><td>硬件产品</td><td>开源飞控的具体型号</td><td>属于 FC 的一种，搭载 FMU 模块</td></tr><tr><td>FMU</td><td>硬件模块</td><td>Pixhawk 的核心计算单元</td><td>是 Pixhawk 的一部分（如 FMUv5）</td></tr><tr><td>PX4</td><td>软件系统</td><td>运行在 FC 上的飞行控制算法</td><td>最适配 Pixhawk，也可用于其他 FC</td></tr></tbody></table>
+<p>简单来说：<strong>FC 是飞控的统称，Pixhawk 是一种开源 FC 硬件，FMU 是 Pixhawk 的核心模块，PX4 是运行在 Pixhawk 等 FC 上的控制软件</strong>。</p>
+<h1>PX4 中的Offboard 模式和Onboard 模式介绍</h1>
+<p>PX4 中的<strong>Offboard 模式</strong>和<strong>Onboard 模式</strong>（通常指自主模式，如 Auto、Mission 等，需注意 “Onboard” 并非 PX4 官方定义的标准模式名称，更多是相对 Offboard 的概念）是两种不同的控制方式，核心区别在于<strong>控制指令的来源</strong>和<strong>自主性程度</strong>，具体如下：</p>
+<h3 class="anchor anchorWithStickyNavbar_LWe7" id="1-offboard-模式外部控制模式"><strong>1. Offboard 模式（外部控制模式）</strong><a href="#1-offboard-模式外部控制模式" class="hash-link" aria-label="Direct link to 1-offboard-模式外部控制模式" title="Direct link to 1-offboard-模式外部控制模式">​</a></h3>
+<p>Offboard 模式是 PX4 专门为<strong>外部设备（如地面站、机载计算机、ROS 节点等）控制无人机</strong>设计的模式。在该模式下，无人机的核心控制指令（如位置、速度、姿态、油门等）完全由外部系统通过特定协议发送给飞控，飞控仅负责执行指令并提供基础的稳定性控制（如保持姿态平稳）。</p>
+<h4 class="anchor anchorWithStickyNavbar_LWe7" id="关键特点"><strong>关键特点</strong>：<a href="#关键特点" class="hash-link" aria-label="Direct link to 关键特点" title="Direct link to 关键特点">​</a></h4>
+<ul>
+<li><strong>控制源在外部</strong>：指令必须由外部设备（如机载电脑运行的算法、地面站软件）通过 Mavlink 协议实时发送（通常频率≥2Hz），否则飞控会在超时后自动切换到安全模式（如 Altitude 或 Position 模式），防止失控。</li>
+<li><strong>灵活性高</strong>：适合自定义控制逻辑，例如科研中实现轨迹跟踪、避障算法、SLAM 导航等，用户可通过编程生成复杂运动指令。</li>
+<li><strong>依赖外部系统</strong>：外部设备故障或通信中断  会直接影响无人机安全，因此通常需要冗余设计或紧急切换机制。</li>
+<li><strong>典型应用</strong>：<!-- -->
+<ul>
+<li>基于 ROS 的自主导航算法测试。</li>
+<li>地面站手动发送自定义轨迹点。</li>
+<li>机载计算机通过视觉传感器实现自主避障。</li>
+</ul>
+</li>
+</ul>
+<h3 class="anchor anchorWithStickyNavbar_LWe7" id="2-onboard-模式自主模式如-automission"><strong>2. Onboard 模式（自主模式，如 Auto/Mission）</strong><a href="#2-onboard-模式自主模式如-automission" class="hash-link" aria-label="Direct link to 2-onboard-模式自主模式如-automission" title="Direct link to 2-onboard-模式自主模式如-automission">​</a></h3>
+<p>PX4 的 “Onboard 模式” 更多是指<strong>飞控自主决策并生成控制指令</strong>的模式，官方标准模式中最典型的是<strong>Auto 模式</strong>（任务模式），此外还包括 Mission、Hold、Return 等。在这类模式下，控制逻辑和指令生成完全在飞控内部完成，无需外部干预。</p>
+<h4 class="anchor anchorWithStickyNavbar_LWe7" id="关键特点-1"><strong>关键特点</strong>：<a href="#关键特点-1" class="hash-link" aria-label="Direct link to 关键特点-1" title="Direct link to 关键特点-1">​</a></h4>
+<ul>
+<li><strong>控制源在飞控内部</strong>：飞控根据预定义任务（如航点列表）、传感器数据（如 GPS、IMU）和内置算法（如 PID 控制器）自主生成控制指令，无需外部输入。</li>
+<li><strong>自主性强</strong>：无需持续外部通信，飞控可独立完成起飞、航点飞行、降落等任务。</li>
+<li><strong>标准化流程</strong>：依赖飞控内置的成熟控制逻辑，用户只需通过地面站规划任务（如设置航点、高度、速度），无需编写复杂控制算法。</li>
+<li><strong>典型应用</strong>：<!-- -->
+<ul>
+<li>按预设航点自动巡检。</li>
+<li>执行重复的测绘任务。</li>
+<li>紧急情况下自动返航（Return 模式 ）。</li>
+</ul>
+</li>
+</ul>
+<h3 class="anchor anchorWithStickyNavbar_LWe7" id="核心区别对比表"><strong>核心区别对比表</strong><a href="#核心区别对比表" class="hash-link" aria-label="Direct link to 核心区别对比表" title="Direct link to 核心区别对比表">​</a></h3>
+<table><thead><tr><th><strong>维度</strong></th><th><strong>Offboard 模式</strong></th><th><strong>Onboard 模式（如 Auto）</strong></th></tr></thead><tbody><tr><td><strong>控制指令来源</strong></td><td>外部设备（机载计算机、地面站等）</td><td>飞控内部（预定义任务、内置算法）</td></tr><tr><td><strong>自主性</strong></td><td>依赖外部系统，飞控仅执行指令</td><td>完全自主，无需外部干预</td></tr><tr><td><strong>通信要求</strong></td><td>需实时发送指令（≥2Hz），否则触发安全模式</td><td>无需持续通信，仅需任务规划阶段配置</td></tr><tr><td><strong>灵活性</strong></td><td>高，支持自定义控制算法</td><td>低，依赖飞控内置逻辑，仅可配置参数 / 航点</td></tr><tr><td><strong>典型用途</strong></td><td>科研、自定义算法测试（如轨迹跟踪、避障）</td><td>常规任务执行（巡检、测绘、自动返航）</td></tr><tr><td><strong>安全机制</strong></td><td>依赖外部系统的冗余设计</td><td>飞控内置安全逻辑（如低电量返航、故障保护）</td></tr></tbody></table>
+<h3 class="anchor anchorWithStickyNavbar_LWe7" id="总结-1"><strong>总结</strong><a href="#总结-1" class="hash-link" aria-label="Direct link to 总结-1" title="Direct link to 总结-1">​</a></h3>
+<ul>
+<li>如果你需要<strong>用自己的算法控制无人机</strong>（如实现特定轨迹、避障逻辑），选择<strong>Offboard 模式</strong>，需确保外部指令的实时性和可靠性。</li>
+<li>如果你只需无人机<strong>按预设流程自主完成任务</strong>（如按航点飞行），选择<strong>Auto 等自主模式</strong>，飞控会处理大部分底层控制，更简单稳定。</li>
+</ul>
+<p>实际应用中，两种模式可结合使用（如 Offboard 模式执行复杂任务，触发紧急情况时切换到 Auto 模式的返航功能）。</p>
+<h1>PX4飞行模式详解</h1>
+<p>PX4 有多种飞行模式，可分为手动模式、辅助模式和自动模式等，以下是具体介绍3：</p>
+<ul>
+<li><strong>手动模式</strong>：<!-- -->
+<ul>
+<li><strong>Manual（手动模式）</strong>：控制源是遥控器，杆量转换为期望的姿态。用户通过遥控器直接控制飞行器，飞控不进行位置控制，位置可能会因风而漂移。</li>
+<li><strong>Acro（特技模式）</strong>：适合穿越机，新手慎用。遥控器杆量转换为期望的角速率，飞控控制角速度，但不控制姿态，飞行器可做出复杂特技动作，操作难度较高。</li>
+</ul>
+</li>
+<li><strong>辅助模式</strong>：<!-- -->
+<ul>
+<li><strong>Altitude（定高模式）</strong>：油门中立时飞行高度保持不变，适合新手飞行。飞行器可保持高度稳定，但无法保持位置定点，受风影响可能会在水平方向漂移。</li>
+<li><strong>Position（定点模式）</strong>：杆量转换为三轴期望的速度，杆量中立时飞行速度为 0，位置不变并保持悬停。该模式下飞行器能抵抗风力，保持在固定位置，是新手较为安全的选择。</li>
+</ul>
+</li>
+<li><strong>自动模式</strong>：<!-- -->
+<ul>
+<li><strong>Takeoff（一键起飞）</strong>：切换到此模式时，飞行器自动起飞，垂直向上飞行到设定高度后保持悬停，不接受摇杆控制。</li>
+<li><strong>Land（一键降落）</strong>：飞行器按照参数设定的速度垂直下降，落地后保持参数时间的怠速后进行上锁。</li>
+<li><strong>Return（一键返航）</strong>：飞行器先向上飞行到一定高度，然后根据参数进行直线或者原路返航到 HOME 点上方，再以降落模式缓缓下降落地。</li>
+<li><strong>Mission（任务模式）</strong>：需先通过地面站进行航点规划并上传到飞机。切换到该模式后，无人机在位置控制环和姿态控制环串级控制下，会按照规划的航点和速度进行飞行。</li>
+<li><strong>Offboard（离线模式）</strong>：飞机接收并响应通过 MAVLink 外部传输的控制数据，多作为承接外部控制数据的接口。使用时需要相关的辅助信息进行周期的沟通维护，否则会跳出该模式。</li>
+</ul>
+</li>
+</ul></div></article><nav class="docusaurus-mt-lg pagination-nav" aria-label="Docs pages"><a class="pagination-nav__link pagination-nav__link--prev" href="/en/Concepts/Micro XRCE-DDS"><div class="pagination-nav__sublabel">Previous</div><div class="pagination-nav__label">Micro XRCE-DDS</div></a><a class="pagination-nav__link pagination-nav__link--next" href="/en/Concepts/ROS2"><div class="pagination-nav__sublabel">Next</div><div class="pagination-nav__label">ROS2</div></a></nav></div></div><div class="col col--3"><div class="tableOfContents_bqdL thin-scrollbar theme-doc-toc-desktop"><ul class="table-of-contents table-of-contents__left-border"><li><a href="#px4飞控架构详解" class="table-of-contents__link toc-highlight">PX4飞控架构详解</a><ul><li><a href="#一整体架构概述" class="table-of-contents__link toc-highlight"><strong>一、整体架构概述</strong></a></li><li><a href="#二核心架构组件解析" class="table-of-contents__link toc-highlight"><strong>二、核心架构组件解析</strong></a></li><li><a href="#三数据流程与控制环路" class="table-of-contents__link toc-highlight"><strong>三、数据流程与控制环路</strong></a></li><li><a href="#四架构优势与设计原则" class="table-of-contents__link toc-highlight"><strong>四、架构优势与设计原则</strong></a></li><li><a href="#五典型应用场景" class="table-of-contents__link toc-highlight"><strong>五、典型应用场景</strong></a></li><li><a href="#六开发与扩展方式" class="table-of-contents__link toc-highlight"><strong>六、开发与扩展方式</strong></a></li><li><a href="#总结" class="table-of-contents__link toc-highlight"><strong>总结</strong></a></li><li><a href="#1fcflight-controller飞控" class="table-of-contents__link toc-highlight">1. <strong>FC（Flight Controller，飞控）</strong></a></li><li><a href="#2pixhawk" class="table-of-contents__link toc-highlight">2. <strong>Pixhawk</strong></a></li><li><a href="#3fmuflight-management-unit飞行管理单元" class="table-of-contents__link toc-highlight">3. <strong>FMU（Flight Management Unit，飞行管理单元）</strong></a></li><li><a href="#4px4" class="table-of-contents__link toc-highlight">4. <strong>PX4</strong></a></li><li><a href="#总结四者的关系" class="table-of-contents__link toc-highlight">总结：四者的关系</a></li><li><a href="#1-offboard-模式外部控制模式" class="table-of-contents__link toc-highlight"><strong>1. Offboard 模式（外部控制模式）</strong></a></li><li><a href="#2-onboard-模式自主模式如-automission" class="table-of-contents__link toc-highlight"><strong>2. Onboard 模式（自主模式，如 Auto/Mission）</strong></a></li><li><a href="#核心区别对比表" class="table-of-contents__link toc-highlight"><strong>核心区别对比表</strong></a></li><li><a href="#总结-1" class="table-of-contents__link toc-highlight"><strong>总结</strong></a></li></ul></li></ul></div></div></div></div></main></div></div></div><footer class="theme-layout-footer footer footer--dark"><div class="container container-fluid"><div class="row footer__links"><div class="theme-layout-footer-column col footer__col"><div class="footer__title">Links</div><ul class="footer__items clean-list"><li class="footer__item"><a href="https://www.utmsys.org/" target="_blank" rel="noopener noreferrer" class="footer__link-item">Homepage<svg width="13.5" height="13.5" aria-hidden="true" class="iconExternalLink_nPIU"><use href="#theme-svg-external-link"></use></svg></a></li><li class="footer__item"><a href="https://www.utmsys.org/pages/contact/" target="_blank" rel="noopener noreferrer" class="footer__link-item">Contact Us<svg width="13.5" height="13.5" aria-hidden="true" class="iconExternalLink_nPIU"><use href="#theme-svg-external-link"></use></svg></a></li></ul></div><div class="theme-layout-footer-column col footer__col"><div class="footer__title">Follow Us</div><ul class="footer__items clean-list"><li class="footer__item"><a href="https://github.com/utmsys" target="_blank" rel="noopener noreferrer" class="footer__link-item">GitHub<svg width="13.5" height="13.5" aria-hidden="true" class="iconExternalLink_nPIU"><use href="#theme-svg-external-link"></use></svg></a></li><li class="footer__item"><a href="https://www.youtube.com/@utmsys/" target="_blank" rel="noopener noreferrer" class="footer__link-item">Youtube<svg width="13.5" height="13.5" aria-hidden="true" class="iconExternalLink_nPIU"><use href="#theme-svg-external-link"></use></svg></a></li><li class="footer__item"><a href="https://www.facebook.com/profile.php?id=61574010301135/" target="_blank" rel="noopener noreferrer" class="footer__link-item">Facebook<svg width="13.5" height="13.5" aria-hidden="true" class="iconExternalLink_nPIU"><use href="#theme-svg-external-link"></use></svg></a></li><li class="footer__item"><a href="https://www.instagram.com/utmsys/" target="_blank" rel="noopener noreferrer" class="footer__link-item">Instagram<svg width="13.5" height="13.5" aria-hidden="true" class="iconExternalLink_nPIU"><use href="#theme-svg-external-link"></use></svg></a></li></ul></div></div><div class="footer__bottom text--center"><div class="footer__copyright">Copyright © 2025 utmsys.</div></div></div></footer></div>
+</body>
+</html>
