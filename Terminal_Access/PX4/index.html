@@ -4,8 +4,8 @@
 <meta charset="UTF-8">
 <meta name="generator" content="Docusaurus v3.8.1">
 <title data-rh="true">4.1 PX4 | UTMSYS</title><meta data-rh="true" name="viewport" content="width=device-width,initial-scale=1"><meta data-rh="true" name="twitter:card" content="summary_large_image"><meta data-rh="true" property="og:image" content="https://wiki.utmsys.org/img/docusaurus-social-card.jpg"><meta data-rh="true" name="twitter:image" content="https://wiki.utmsys.org/img/docusaurus-social-card.jpg"><meta data-rh="true" property="og:url" content="https://wiki.utmsys.org/Terminal_Access/PX4"><meta data-rh="true" property="og:locale" content="zh"><meta data-rh="true" property="og:locale:alternate" content="en"><meta data-rh="true" name="docusaurus_locale" content="zh"><meta data-rh="true" name="docsearch:language" content="zh"><meta data-rh="true" name="docusaurus_version" content="current"><meta data-rh="true" name="docusaurus_tag" content="docs-default-current"><meta data-rh="true" name="docsearch:version" content="current"><meta data-rh="true" name="docsearch:docusaurus_tag" content="docs-default-current"><meta data-rh="true" property="og:title" content="4.1 PX4 | UTMSYS"><meta data-rh="true" name="description" content="PX4 User and Developer Guide"><meta data-rh="true" property="og:description" content="PX4 User and Developer Guide"><link data-rh="true" rel="icon" href="/img/logo.png"><link data-rh="true" rel="canonical" href="https://wiki.utmsys.org/Terminal_Access/PX4"><link data-rh="true" rel="alternate" href="https://wiki.utmsys.org/en/Terminal_Access/PX4" hreflang="en"><link data-rh="true" rel="alternate" href="https://wiki.utmsys.org/Terminal_Access/PX4" hreflang="zh"><link data-rh="true" rel="alternate" href="https://wiki.utmsys.org/Terminal_Access/PX4" hreflang="x-default"><script data-rh="true" type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"4. 终端访问","item":"https://wiki.utmsys.org/04_Terminal_Access"},{"@type":"ListItem","position":2,"name":"4.1 PX4","item":"https://wiki.utmsys.org/Terminal_Access/PX4"}]}</script><link rel="stylesheet" href="/assets/css/styles.fdfcd1c3.css">
-<script src="/assets/js/runtime~main.13fe579c.js" defer="defer"></script>
-<script src="/assets/js/main.d99b0fdb.js" defer="defer"></script>
+<script src="/assets/js/runtime~main.33bbd064.js" defer="defer"></script>
+<script src="/assets/js/main.22b45b0a.js" defer="defer"></script>
 </head>
 <body class="navigation-with-keyboard">
 <svg xmlns="http://www.w3.org/2000/svg" style="display: none;"><defs>
@@ -34,9 +34,9 @@
 <h2 class="anchor anchorWithStickyNavbar_LWe7" id="mavlink-shell设置">MAVLink Shell设置<a href="#mavlink-shell设置" class="hash-link" aria-label="MAVLink Shell设置的直接链接" title="MAVLink Shell设置的直接链接">​</a></h2>
 <p>MAVLink Shell 是一个 <em>NSH 控制台</em> ，可以通过串行（USB/Telemetry）或 WiFi（UDP/TCP）链路（特别是在基于 NuttX 的系统上，如：Pixhawk、Pixracer 等）通过 MAVLink 访问。</p>
 <ul class="contains-task-list containsTaskList_mC6p">
-<li class="task-list-item"><input type="checkbox" disabled=""> <!-- -->FC USB连接到PC图</li>
+<li class="task-list-item"><input type="checkbox" disabled=""> <!-- -->FC USB连接到PC</li>
 </ul>
-<p>Shell 可用于运行命令和模块，并显示它们的输出。虽然 Shell 无法 <em>直接</em> 显示其未启动的模块的输出，但它可以使用 <code>dmesg</code> 命令间接显示（ <code>dmesg -f &amp;</code> 可用于显示工作队列中运行的其他模块和 任务的输出）。</p>
+<p>Shell 可用于运行命令和模块，并显示它们的输出。虽然 Shell 无法 <em>直接</em> 显示其未启动的模块的输出，但它可以使用 <code>dmesg</code> 命令间接显示（ <code>dmesg -f &amp;</code> 可用于显示工作队列中运行的其他模块和任 务的输出）。</p>
 <h3 class="anchor anchorWithStickyNavbar_LWe7" id="通过qgroundcontrol-mavlink-控制台">通过QGroundControl MAVLink 控制台<a href="#通过qgroundcontrol-mavlink-控制台" class="hash-link" aria-label="通过QGroundControl MAVLink 控制台的直接链接" title="通过QGroundControl MAVLink 控制台的直接链接">​</a></h3>
 <p>访问 shell 的最简单方法是使用 <a href="https://docs.qgroundcontrol.com/master/en/qgc-user-guide/analyze_view/mavlink_console.html" target="_blank" rel="noopener noreferrer">QGroundControl MAVLink 控制台</a> （参见 <strong>Analyze View &gt; Mavlink Console</strong> ）。控制台仅当连接到运行_PX4飞行组件的硬件_时才有效。不支持 PX4 SITL 和 ArduPilot。</p>
 <p>这项功能对开发者来说非常有用，因为它允许深度访问系统。特别是，如果您通过 Wi-Fi 连接，则可以在飞行器飞行时获得相同级别的访问权限。</p>
@@ -60,7 +60,7 @@
 </li>
 </ol>
 <p>用于<code>mavlink_shell.py -h</code>获取所有可用参数的描述。</p>
-<h2 class="anchor anchorWithStickyNavbar_LWe7" id="px4系统控制台设置">PX4系统控制台设置<a href="#px4系统控制台设置" class="hash-link" aria-label="PX4系统控制台设置的直接链接" title="PX4系统控制  台设置的直接链接">​</a></h2>
+<h2 class="anchor anchorWithStickyNavbar_LWe7" id="px4系统控制台设置">PX4系统控制台设置<a href="#px4系统控制台设置" class="hash-link" aria-label="PX4系统控制台设置的直接链接" title="PX4系统控制台  设置的直接链接">​</a></h2>
 <p>PX4 <em>系统控制台</em> 提供对系统的低级访问、调试输出和系统启动过程的分析。</p>
 <p>提示</p>
 <p>如果系统无法启动，则应使用控制台进行调试。MAVLink <a href="https://docs.px4.io/main/en/debug/mavlink_shell.html" target="_blank" rel="noopener noreferrer">Shell</a> 可能更适合，因为它设置起来更容易，并且可以执行 <a href="https://docs.px4.io/main/en/debug/consoles.html#console_vs_shell" target="_blank" rel="noopener noreferrer">许多相同的任务</a> 。</p>

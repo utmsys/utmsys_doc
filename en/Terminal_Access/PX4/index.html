@@ -4,8 +4,8 @@
 <meta charset="UTF-8">
 <meta name="generator" content="Docusaurus v3.8.1">
 <title data-rh="true">4.1 PX4 | UTMSYS</title><meta data-rh="true" name="viewport" content="width=device-width,initial-scale=1"><meta data-rh="true" name="twitter:card" content="summary_large_image"><meta data-rh="true" property="og:image" content="https://wiki.utmsys.org/en/img/docusaurus-social-card.jpg"><meta data-rh="true" name="twitter:image" content="https://wiki.utmsys.org/en/img/docusaurus-social-card.jpg"><meta data-rh="true" property="og:url" content="https://wiki.utmsys.org/en/Terminal_Access/PX4"><meta data-rh="true" property="og:locale" content="en"><meta data-rh="true" property="og:locale:alternate" content="zh"><meta data-rh="true" name="docusaurus_locale" content="en"><meta data-rh="true" name="docsearch:language" content="en"><meta data-rh="true" name="docusaurus_version" content="current"><meta data-rh="true" name="docusaurus_tag" content="docs-default-current"><meta data-rh="true" name="docsearch:version" content="current"><meta data-rh="true" name="docsearch:docusaurus_tag" content="docs-default-current"><meta data-rh="true" property="og:title" content="4.1 PX4 | UTMSYS"><meta data-rh="true" name="description" content="PX4 User and Developer Guide"><meta data-rh="true" property="og:description" content="PX4 User and Developer Guide"><link data-rh="true" rel="icon" href="/en/img/logo.png"><link data-rh="true" rel="canonical" href="https://wiki.utmsys.org/en/Terminal_Access/PX4"><link data-rh="true" rel="alternate" href="https://wiki.utmsys.org/en/Terminal_Access/PX4" hreflang="en"><link data-rh="true" rel="alternate" href="https://wiki.utmsys.org/Terminal_Access/PX4" hreflang="zh"><link data-rh="true" rel="alternate" href="https://wiki.utmsys.org/Terminal_Access/PX4" hreflang="x-default"><script data-rh="true" type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"4. 终端访问","item":"https://wiki.utmsys.org/en/04_Terminal_Access"},{"@type":"ListItem","position":2,"name":"4.1 PX4","item":"https://wiki.utmsys.org/en/Terminal_Access/PX4"}]}</script><link rel="stylesheet" href="/en/assets/css/styles.fdfcd1c3.css">
-<script src="/en/assets/js/runtime~main.cbf500da.js" defer="defer"></script>
-<script src="/en/assets/js/main.51f2dd3d.js" defer="defer"></script>
+<script src="/en/assets/js/runtime~main.aec8670d.js" defer="defer"></script>
+<script src="/en/assets/js/main.451f1019.js" defer="defer"></script>
 </head>
 <body class="navigation-with-keyboard">
 <svg xmlns="http://www.w3.org/2000/svg" style="display: none;"><defs>
@@ -34,7 +34,7 @@
 <h2 class="anchor anchorWithStickyNavbar_LWe7" id="mavlink-shell设置">MAVLink Shell设置<a href="#mavlink-shell设置" class="hash-link" aria-label="Direct link to MAVLink Shell设置" title="Direct link to MAVLink Shell设置">​</a></h2>
 <p>MAVLink Shell 是一个 <em>NSH 控制台</em> ，可以通过串行（USB/Telemetry）或 WiFi（UDP/TCP）链路（特别是在基于 NuttX 的系统上，如：Pixhawk、Pixracer 等）通过 MAVLink 访问。</p>
 <ul class="contains-task-list containsTaskList_mC6p">
-<li class="task-list-item"><input type="checkbox" disabled=""> <!-- -->FC USB连接到PC图</li>
+<li class="task-list-item"><input type="checkbox" disabled=""> <!-- -->FC USB连接到PC</li>
 </ul>
 <p>Shell 可用于运行命令和模块，并显示它们的输出。虽然 Shell 无法 <em>直接</em> 显示其未启动的模块的输出，但它可以使用 <code>dmesg</code> 命令间接显示（ <code>dmesg -f &amp;</code> 可用于显示工作队列中运行的其他模块和任务的输出）。</p>
 <h3 class="anchor anchorWithStickyNavbar_LWe7" id="通过qgroundcontrol-mavlink-控制台">通过QGroundControl MAVLink 控制台<a href="#通过qgroundcontrol-mavlink-控制台" class="hash-link" aria-label="Direct link to 通过QGroundControl MAVLink 控制台" title="Direct link to 通过QGroundControl MAVLink 控制台">​</a></h3>
@@ -72,7 +72,7 @@
 <p>Pixhawk 控制器制造商应通过 符合 <a href="https://docs.px4.io/main/en/debug/#pixhawk_debug_port" target="_blank" rel="noopener noreferrer">Pixhawk 连接器标准的专用</a> <em>调试端口</em> 公开控制台 UART 和 SWD (JTAG) 调试接口。遗憾的是，有些开发板的版本早于此标准或不符合此标准。</p>
 <p>以下部分概述/链接了许多常见电路板的接线和系统控制台信息。</p>
 <h3 class="anchor anchorWithStickyNavbar_LWe7" id="电路板专用布线">电路板专用布线<a href="#电路板专用布线" class="hash-link" aria-label="Direct link to 电路板专用布线" title="Direct link to 电路板专用布线">​</a></h3>
-<p>系统  控制台 UART 引脚排列/调试端口通常记录在 <a href="https://docs.px4.io/main/en/flight_controller/" target="_blank" rel="noopener noreferrer">自动驾驶仪概述页面</a> 中（其中一些链接如下）：</p>
+<p>系统控  制台 UART 引脚排列/调试端口通常记录在 <a href="https://docs.px4.io/main/en/flight_controller/" target="_blank" rel="noopener noreferrer">自动驾驶仪概述页面</a> 中（其中一些链接如下）：</p>
 <ul>
 <li><a href="https://docs.px4.io/main/en/flight_controller/pixhawk.html#console-port" target="_blank" rel="noopener noreferrer">3DR Pixhawk v1 飞行控制器</a> （也适用于 <a href="https://docs.px4.io/main/en/flight_controller/mro_pixhawk.html#debug-ports" target="_blank" rel="noopener noreferrer">mRo Pixhawk</a> 、 <a href="https://docs.px4.io/main/en/flight_controller/holybro_pix32.html#debug-port" target="_blank" rel="noopener noreferrer">Holybro pix32</a> ）</li>
 <li><a href="https://docs.px4.io/main/en/flight_controller/pixhawk3_pro.html#debug-port" target="_blank" rel="noopener noreferrer">Pixhawk 3</a></li>
