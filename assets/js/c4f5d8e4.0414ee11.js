@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkutm_doc=self.webpackChunkutm_doc||[]).push([[2634],{192:(e,u,c)=>{c.r(u),c.d(u,{default:()=>o});var n=c(6540),s=c(6347),t=c(4586);const o=function(){const e=(0,s.W6)(),{i18n:u}=(0,t.A)();return console.log(u.currentLocale),(0,n.useEffect)(()=>{e.push("/UTMSYS/"),"en"===u.currentLocale?e.push("/en/UTMSYS/"):e.push("/UTMSYS/")},[e]),null}}}]);
